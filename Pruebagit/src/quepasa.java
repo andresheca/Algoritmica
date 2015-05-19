@@ -1,4 +1,4 @@
 
-public class prueba {
+public class quepasa {
 	//que pasa winthero
 }
