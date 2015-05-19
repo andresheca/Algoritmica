@@ -1,24 +1,23 @@
 package practica4;
 
 /**
- * Casillas en las que se divide la central nuclear
- * 
- * @author Adrian Herrera Arcila, Andres Heredia Canales y Asier Lopez Uriona
- * 
+ * Casillas en las que se divide la central nuclear.
+ * @author Adrian Herrera Arcila, Andres Heredia Canales y Asier Lopez Uriona.
  */
-
-public class Casilla {
-	//Coordenadas
+public class Casilla
+{
+	//Coordenadas:
 	private int x, y;
 
-	//Contenido: libre u ocupada
+	//Contenido: libre u ocupada (L/O).
 	private char contenido;
 
 	/**
 	 * Constructor de la clase casilla. Necesita obligatoriamente las
-	 * coordenadas que representa asÌ como su contenido.
+	 * coordenadas que representa asi como su contenido.
 	 */
-	public Casilla(int x, int y, char p) {
+	public Casilla(int x, int y, char p)
+	{
 		this.x = x;
 		this.y = y;
 		this.contenido = p;
@@ -27,28 +26,32 @@ public class Casilla {
 	/**
 	 * Devuelve la coordenada X de la casilla.
 	 */
-	public int getX() {
+	public int getX()
+	{
 		return this.x;
 	}
 
 	/**
 	 * Devuelve la coordenada Y de la casilla.
 	 */
-	public int getY() {
+	public int getY()
+	{
 		return this.y;
 	}
 
 	/**
 	 * Devuelve el contenido de la casilla.
 	 */
-	public char getContenido() {
+	public char getContenido()
+	{
 		return this.contenido;
 	}
 
 	/**
-	 * Establece un nuevo contenido para la casilla
+	 * Establece un nuevo contenido para la casilla.
 	 */
-	public void setContenido(char p) {
+	public void setContenido(char p)
+	{
 		this.contenido = p;
 	}
 
@@ -56,7 +59,8 @@ public class Casilla {
 	 * Metodo para comparar dos casillas.
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		Casilla c = (Casilla) obj;
 		return this.x == c.getX() && this.y == c.getY();
 	}
