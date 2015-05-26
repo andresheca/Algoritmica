@@ -6,18 +6,13 @@ import java.io.IOException;
 import java.util.Vector;
 
 /**
- * Clase main que simula la actuacion del robot en la central
- * 
- * @author Adrian Herrera Arcila, Andres Heredia Canales y Asier Lopez Uriona
- * 
+ * Clase main que simula la actuacion del robot en la central.
+ * @author Adrian Herrera Arcila, Andres Heredia Canales y Asier Lopez Uriona.
  */
-
-public class Main {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
+public class Main
+{
+	public static void main(String[] args)
+	{
 		Central c = new Central("central.txt");
 		c.pintaCentral();
 

@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
  * Clase que representa una central nuclear. 
  * @author Adrian Herrera Arcila, Andres Heredia Canales y Asier Lopez Uriona.
  */
-
 public class Central
 {
 	//Largo de la central:
@@ -30,7 +29,7 @@ public class Central
 		return fin;
 	}
 
-	/**Matriz que representa las casillas de la central.*/
+	/* Matriz que representa las casillas de la central. */
 	private Casilla tablero[][];
 
 	/**
@@ -64,19 +63,19 @@ public class Central
 
 	private void leerCentral(String fichero) throws NumberFormatException, IOException
 	{
-		inicial = new Casilla(0, 0, 'L');
+		inicial=new Casilla(0, 0, 'L');
 
-		FileInputStream fstream = new FileInputStream(fichero);
-		DataInputStream in = new DataInputStream(fstream);
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		FileInputStream fstream=new FileInputStream(fichero);
+		DataInputStream in=new DataInputStream(fstream);
+		BufferedReader br=new BufferedReader(new InputStreamReader(in));
 
-		// Cogemos el tamaaño de la central.
-		String strLine = br.readLine();
-		String[] str = strLine.split(" ");
-		// Primera linea del fichero
-		this.fin = new Casilla(Integer.parseInt(str[0]) - 1, Integer.parseInt(str[1]) - 1, 'L');
+		//Cogemos el tamaaño de la central.
+		String strLine=br.readLine();
+		String[] str=strLine.split(" ");
+		//Primera linea del fichero
+		this.fin=new Casilla(Integer.parseInt(str[0])-1, Integer.parseInt(str[1])-1, 'L');
 
-		// Segunda linea y en adelante
+		//Segunda linea y en adelante
 		if (strLine != null)
 		{
 			strLine = br.readLine();
@@ -161,14 +160,14 @@ public class Central
 	 */
 	public void pintaCentral()
 	{
-		for (int i = 0; i < this.largo; i++)
+		for(int i=0; i<this.largo; i++)
 		{
-			// Imprimimos linea horizontal de separacion.
-			for (int j = 0; j < this.ancho; j++)
+			//Imprimimos linea horizontal de separacion.
+			for(int j=0; j<this.ancho; j++)
 				System.out.print("----");
 			System.out.print("-\n");
 
-			for (int j = 0; j < this.ancho; j++)
+			for(int j=0; j<this.ancho; j++)
 				System.out.print("| " + tablero[i][j].getContenido() + " ");
 			System.out.print("|\n");
 		}
