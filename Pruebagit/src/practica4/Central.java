@@ -69,7 +69,7 @@ public class Central
 		DataInputStream in=new DataInputStream(fstream);
 		BufferedReader br=new BufferedReader(new InputStreamReader(in));
 
-		//Cogemos el tamaaño de la central.
+		//Cogemos el tamanio de la central.
 		String strLine=br.readLine();
 		String[] str=strLine.split(" ");
 		//Primera linea del fichero
@@ -176,6 +176,12 @@ public class Central
 		for (int j = 0; j < this.ancho; j++)
 			System.out.print("----");
 		System.out.print("\n");
+	}
+	
+	/* Metodo para obtener el numero de casillas */
+	public numCasillas()
+	{
+		return (this.largo*this.ancho);
 	}
 }
 

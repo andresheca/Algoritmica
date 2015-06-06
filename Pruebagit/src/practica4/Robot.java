@@ -1,6 +1,7 @@
 package practica4;
 
 import java.util.Vector;
+import java.util.PriorityQueue;
 
 /**
  * Robot que se utiliza en una central nuclear en caso de catastrofe
@@ -151,6 +152,87 @@ public class Robot {
 			}
 			return b;
 		}
+	}
+
+	private boolean BTIterativo()
+	{
+		boolean encontrado=false;
+		int k=0;
+		while(!encontrado)
+		{
+			
+		}
+	}
+
+	private boolean ramYPoda(int k)
+	{
+		PriorityQueue<Casilla> adyacentes=new PriorityQueue<Casilla>();
+		Casilla c=vectorDecisiones.lastElement();
+		Casilla temp;
+		//Generamos los adyacentes:
+		temp=central.getCasilla(c.getX()+1, c.getY());
+		if(temp!=null)
+		{
+			cota(temp);
+			adyacentes.offer(temp);
+		}
+		temp=central.getCasilla(c.getX()-1, c.getY());
+		if(temp!=null)
+                {
+                        cota(temp);
+                        adyacentes.offer(temp);
+                }
+		temp=central.getCasilla(c.getX(), c.getY()+1);
+		if(temp!=null)
+                {
+                        cota(temp);
+                        adyacentes.offer(temp);
+                }
+		temp=central.getCasilla(c.getX(), c.getY()-1);
+		if(temp!=null)
+                {
+                        cota(temp);
+                        adyacentes.offer(temp);
+                }
+		while(!adyacentes.isEmpty())
+		{
+			temp=adyacentes.poll();
+			if(esFactible(temp) && k<kMejor)
+			{
+				if(temp.equals(c_fin))
+				{
+					vectorSolucion=new Vector<Casilla>(vectorDecisiones);
+					kMejor=k;
+				}else
+				{
+					ramYPoda(k+1);
+				}
+			}
+		}
+		return (vectorSolucion!=null);
+	}
+
+	/* Metodo que calcula la cota sobre la que se basara ramificacion y poda */
+	private void cota(Casilla cas)
+	{
+		int cota=0;
+		int Xactual=cas.getX();
+		int Yactual=cas.getY();
+		cota+=(c_fin.getX()-Xactual)+(c_fin.getY()-Yactual);
+		//Derecha:
+		if(central.getCasilla(Xactual+1, Yactual)!=null && central.getCasilla(Xactual+1, Yactual).getContenido=='O')
+			cota+=1;
+		//Izquierda:
+		if(central.getCasilla(Xactual-1, Yactual)!=null && central.getCasilla(Xactual-1, Yactual).getContenido=='O')
+                        cota+=1;
+		//Arriba:
+		if(central.getCasilla(Xactual, Yactual+1)!=null && central.getCasilla(Xactual, Yactual+1).getContenido=='O')
+                        cota+=1;
+		//Abajo:
+                if(central.getCasilla(Xactual, Yactual-1)!=null && central.getCasilla(Xactual, Yactual-1).getContenido=='O')
+                        cota+=1;
+		cas.setCota(cota);
+	}
 
 		/**
 		 * Metodo que indica si una casilla es buena candidata para el movimiento

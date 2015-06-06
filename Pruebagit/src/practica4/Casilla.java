@@ -9,6 +9,9 @@ public class Casilla
 	//Coordenadas:
 	private int x, y;
 
+	//Cota de la casilla:
+	int cota;
+
 	//Contenido: libre u ocupada (L/O).
 	private char contenido;
 
@@ -53,6 +56,25 @@ public class Casilla
 	public void setContenido(char p)
 	{
 		this.contenido = p;
+	}
+
+	/* Metodo para establecer la cota de la casilla en un contexto en el que pertenezca a una central */
+	public void setCota(int cota)
+	{
+		this.cota=cota;
+	}
+
+	/* Metodo para obtener la cota */
+	public int getCota()
+	{
+		return this.cota;
+	}
+
+	@Override
+	public int compareTo(Object o)
+	{
+		Casilla c=(Casilla) o;
+		return (this.cota-c.getCota());
 	}
 
 	/**
