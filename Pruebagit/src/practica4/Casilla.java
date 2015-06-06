@@ -70,7 +70,6 @@ public class Casilla
 		return this.cota;
 	}
 
-	@Override
 	public int compareTo(Object o)
 	{
 		Casilla c=(Casilla) o;

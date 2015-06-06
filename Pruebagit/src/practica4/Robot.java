@@ -150,8 +150,8 @@ public class Robot {
 				}
 				i++;
 			}
-			return b;
 		}
+		return b;
 	}
 
 	private boolean BTIterativo()
@@ -162,6 +162,8 @@ public class Robot {
 		{
 			
 		}
+		//TODO: Hay que hacerlo.
+		return false;
 	}
 
 	private boolean ramYPoda(int k)
@@ -220,16 +222,16 @@ public class Robot {
 		int Yactual=cas.getY();
 		cota+=(c_fin.getX()-Xactual)+(c_fin.getY()-Yactual);
 		//Derecha:
-		if(central.getCasilla(Xactual+1, Yactual)!=null && central.getCasilla(Xactual+1, Yactual).getContenido=='O')
+		if(central.getCasilla(Xactual+1, Yactual)!=null && central.getCasilla(Xactual+1, Yactual).getContenido()=='O')
 			cota+=1;
 		//Izquierda:
-		if(central.getCasilla(Xactual-1, Yactual)!=null && central.getCasilla(Xactual-1, Yactual).getContenido=='O')
+		if(central.getCasilla(Xactual-1, Yactual)!=null && central.getCasilla(Xactual-1, Yactual).getContenido()=='O')
                         cota+=1;
 		//Arriba:
-		if(central.getCasilla(Xactual, Yactual+1)!=null && central.getCasilla(Xactual, Yactual+1).getContenido=='O')
+		if(central.getCasilla(Xactual, Yactual+1)!=null && central.getCasilla(Xactual, Yactual+1).getContenido()=='O')
                         cota+=1;
 		//Abajo:
-                if(central.getCasilla(Xactual, Yactual-1)!=null && central.getCasilla(Xactual, Yactual-1).getContenido=='O')
+                if(central.getCasilla(Xactual, Yactual-1)!=null && central.getCasilla(Xactual, Yactual-1).getContenido()=='O')
                         cota+=1;
 		cas.setCota(cota);
 	}

@@ -179,7 +179,7 @@ public class Central
 	}
 	
 	/* Metodo para obtener el numero de casillas */
-	public numCasillas()
+	public int numCasillas()
 	{
 		return (this.largo*this.ancho);
 	}
