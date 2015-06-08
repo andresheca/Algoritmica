@@ -32,10 +32,7 @@ public class Central
 	/* Matriz que representa las casillas de la central. */
 	private Casilla tablero[][];
 
-	/**
-	 * Constructor de la clase central que inicializa las variables y crea la
-	 * matriz de casillas estableciendolas inicialmente todas como "Libres".
-	 */
+	/** Constructor de la clase central que inicializa las variables y crea la matriz de casillas estableciendolas inicialmente todas como "Libres". */
 	public Central(int l, int a)
 	{
 		this.largo = l;
@@ -47,6 +44,7 @@ public class Central
 				this.tablero[i][j] = new Casilla(i, j, 'L');
 	}
 
+	/** Constructor de la clase al que solo se le pasa el nombre del fichero de input. */
 	public Central(String txtFile)
 	{
 		try
@@ -61,6 +59,7 @@ public class Central
 		}
 	}
 
+	/** Metodo que permite leer la estructura de la central (tras el desastre) del fichero de input. */
 	private void leerCentral(String fichero) throws NumberFormatException, IOException
 	{
 		inicial=new Casilla(0, 0, 'L');
@@ -128,10 +127,7 @@ public class Central
 		in.close();
 	}
 
-	/**
-	 * Metodo que devuelve si existe en la central una casilla basandose en las
-	 * coordenadas pasadas como argumento.
-	 */
+	/** Metodo que devuelve si existe en la central una casilla basandose en las coordenadas pasadas como argumento. */
 	public Casilla getCasilla(int x, int y)
 	{
 		if (x < 0 || y < 0 || x >= this.largo || y >= this.ancho)
@@ -139,17 +135,13 @@ public class Central
 		return this.tablero[x][y];
 	}
 
-	/**
-	 * Metodo que indica si hay obstaculo en una casilla
-	 */
+	/** Metodo que indica si hay obstaculo en una casilla. */
 	public boolean hayObstaculo(Casilla c)
 	{
 		return tablero[c.getX()][c.getY()].getContenido() == 'O';
 	}
 
-	/**
-	 * Metodo para poner una casilla de la central con un obstaculo y ocupada.
-	 */
+	/** Metodo para poner una casilla de la central con un obstaculo y ocupada. */
 	public void setObstaculo(int x, int y)
 	{
 		this.tablero[x][y].setContenido('O');

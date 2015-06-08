@@ -4,7 +4,7 @@ package practica4;
  * Casillas en las que se divide la central nuclear.
  * @author Adrian Herrera Arcila, Andres Heredia Canales y Asier Lopez Uriona.
  */
-public class Casilla
+public class Casilla implements Comparable<Casilla>
 {
 	//Coordenadas:
 	private int x, y;
@@ -58,12 +58,12 @@ public class Casilla
 	{
 		return this.cota;
 	}
-	
+
+	@Override	
 	/** Metodo para comparar casillas respecto a su cota. */
-	public int compareTo(Object o)
+	public int compareTo(Casilla cas)
 	{
-		Casilla c=(Casilla) o;
-		return (this.cota-c.getCota());
+		return (this.cota-cas.getCota());
 	}
 
 	@Override
