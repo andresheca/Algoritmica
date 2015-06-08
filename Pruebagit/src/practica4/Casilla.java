@@ -59,7 +59,6 @@ public class Casilla
 		return this.cota;
 	}
 	
-	@Override
 	/** Metodo para comparar casillas respecto a su cota. */
 	public int compareTo(Object o)
 	{
