@@ -221,7 +221,7 @@ public class Robot {
 		int cota=0;
 		int Xactual=cas.getX();
 		int Yactual=cas.getY();
-		cota+=abs((c_fin.getX()-Xactual)+(c_fin.getY()-Yactual));
+		cota+=Math.abs((c_fin.getX()-Xactual)+(c_fin.getY()-Yactual));
 		//Derecha:
 		if(central.getCasilla(Xactual+1, Yactual)!=null && central.getCasilla(Xactual+1, Yactual).getContenido()=='O')
 			cota+=1;
