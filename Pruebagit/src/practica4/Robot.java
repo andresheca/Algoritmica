@@ -2,6 +2,7 @@ package practica4;
 
 import java.util.Vector;
 import java.util.PriorityQueue;
+import java.lang.Math;
 
 /**
  * Robot que se utiliza en una central nuclear en caso de catastrofe
@@ -220,7 +221,7 @@ public class Robot {
 		int cota=0;
 		int Xactual=cas.getX();
 		int Yactual=cas.getY();
-		cota+=(c_fin.getX()-Xactual)+(c_fin.getY()-Yactual);
+		cota+=abs((c_fin.getX()-Xactual)+(c_fin.getY()-Yactual));
 		//Derecha:
 		if(central.getCasilla(Xactual+1, Yactual)!=null && central.getCasilla(Xactual+1, Yactual).getContenido()=='O')
 			cota+=1;
