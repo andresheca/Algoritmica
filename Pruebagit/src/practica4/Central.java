@@ -19,11 +19,13 @@ public class Central
 	//Casillas inicial y final:
 	private Casilla inicial, fin;
 
+	/** Metodo que devuelve la casilla en la que empieza el robot. */
 	public Casilla getInicial()
 	{
 		return inicial;
 	}
 
+	/** Metodo que devuelve la casilla en la que debe finalizar el robot. */
 	public Casilla getFin()
 	{
 		return fin;
@@ -68,13 +70,13 @@ public class Central
 		DataInputStream in=new DataInputStream(fstream);
 		BufferedReader br=new BufferedReader(new InputStreamReader(in));
 
-		//Cogemos el tamanio de la central.
+		//Cogemos el tamanio de la central:
 		String strLine=br.readLine();
 		String[] str=strLine.split(" ");
-		//Primera linea del fichero
+		//Primera linea del fichero:
 		this.fin=new Casilla(Integer.parseInt(str[0])-1, Integer.parseInt(str[1])-1, 'L');
 
-		//Segunda linea y en adelante
+		//Segunda linea y en adelante:
 		if (strLine != null)
 		{
 			strLine = br.readLine();
@@ -90,14 +92,14 @@ public class Central
 		in.close();
 		System.out.println("Largo tomado: " + this.largo + "\nAncho tomado: " + this.ancho + "\nObjetivo : " + this.fin.getX() + ", " + this.fin.getY());
 
-		// Inicializo el tablero
+		// Inicializo el tablero:
 		this.tablero = new Casilla[this.largo][this.ancho];
-		// Leo de nuevo
+		// Leo de nuevo:
 		fstream = new FileInputStream(fichero);
 		in = new DataInputStream(fstream);
 		br = new BufferedReader(new InputStreamReader(in));
 
-		// Cogemos el tamanyo de la central.
+		// Cogemos el tamanio de la central:
 		strLine = br.readLine();
 
 		if (strLine != null)
@@ -154,7 +156,7 @@ public class Central
 	{
 		for(int i=0; i<this.largo; i++)
 		{
-			//Imprimimos linea horizontal de separacion.
+			//Imprimimos linea horizontal de separacion:
 			for(int j=0; j<this.ancho; j++)
 				System.out.print("----");
 			System.out.print("-\n");
@@ -164,13 +166,13 @@ public class Central
 			System.out.print("|\n");
 		}
 
-		// Imprimimos ultima linea horizontal.
+		//Imprimimos ultima linea horizontal:
 		for (int j = 0; j < this.ancho; j++)
 			System.out.print("----");
 		System.out.print("\n");
 	}
 	
-	/* Metodo para obtener el numero de casillas */
+	/** Metodo para obtener el numero de casillas de la central. */
 	public int numCasillas()
 	{
 		return (this.largo*this.ancho);
