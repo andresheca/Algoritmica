@@ -2,12 +2,11 @@ package practica4;
 
 import java.util.Vector;
 import java.util.PriorityQueue;
-import java.lang.Math;
 
 /**
  * Robot que se utiliza en una central nuclear en caso de catastrofe
  * 
- * @author Adrian Herrera Arcila, Andrés Heredia Canales y Asier Lopez Uriona
+ * @author Adrian Herrera Arcila, Andres Heredia Canales y Asier Lopez Uriona
  * 
  */
 
@@ -58,6 +57,18 @@ public class Robot {
 		return null;
 	}
 
+	/** Metodo que devuelve una solucion basada en ramificacion y poda. */
+	public Vector<Casilla> getSolucionRYP()
+	{
+		this.vectorDecisiones = new Vector<Casilla>();
+		vectorDecisiones.add(this.c_ini);
+		if(ramYPoda(1))
+		{
+			return vectorSolucion;
+		}
+		return null;
+	}
+
 	public Vector<Casilla> getSolucionIterativo() {
 		this.vectorDecisiones = new Vector<Casilla>();
 		vectorDecisiones.add(this.c_ini);
@@ -81,7 +92,7 @@ public class Robot {
 		return null;
 	}
 	/**
-	 * Método que devuelve el mejor camino encontrado(si le hay).
+	 * Metodo que devuelve el mejor camino encontrado (si le hay).
 	 * @param int representa el numero de decisiones tomadas (numero de casillas avanzadas)
 	 * @return true si encuentra solucion
 	 */
@@ -212,7 +223,7 @@ public class Robot {
 					// Abajo
 					cTemp = this.central.getCasilla(c.getX() + 1, c.getY());
 				}
-				//Si es factible añadimos el movimiento, si no, volvemos a la casilla anterior.
+				//Si es factible aniadimos el movimiento, si no, volvemos a la casilla anterior.
 				if (this.esFactible(cTemp)) {
 					k++;
 					vectorDecisiones.add(cTemp);
@@ -234,12 +245,13 @@ public class Robot {
 		}
 		return encontrado;
 	}
-
+	
+	/** Algoritmo basado en ramificacion y poda; se diferencia de backtracking en que se basa en una cota asignada a cada casilla en runtime para elegir el camino a seguir. */
 	private boolean ramYPoda(int k) {
 		PriorityQueue<Casilla> adyacentes = new PriorityQueue<Casilla>();
 		Casilla c = vectorDecisiones.lastElement();
 		Casilla temp;
-		// Generamos los adyacentes:
+		// Generamos los adyacentes y los metemos en la cola; esta cola los ordena por su cota, de menor a mayor:
 		temp = central.getCasilla(c.getX() + 1, c.getY());
 		if (temp != null) {
 			cota(temp);
@@ -260,21 +272,26 @@ public class Robot {
 			cota(temp);
 			adyacentes.offer(temp);
 		}
+		//Mientras existan nodos en la cola, evaluamos:
 		while (!adyacentes.isEmpty()) {
 			temp = adyacentes.poll();
+			//Si es factible y el numero de movimientos es menor que el mejor:
 			if (esFactible(temp) && k < kMejor) {
+				//Si es la casilla final almacenamos la solucion:
 				if (temp.equals(c_fin)) {
 					vectorSolucion = new Vector<Casilla>(vectorDecisiones);
 					kMejor = k;
+				//Si no bajamos un nivel en el arbol de busqueda:
 				} else {
 					ramYPoda(k + 1);
 				}
 			}
 		}
+		//Finalizamos retornando la solucion obtenida:
 		return (vectorSolucion != null);
 	}
 
-	/* Metodo que calcula la cota sobre la que se basara ramificacion y poda */
+	/** Metodo que calcula la cota sobre la que se basara ramificacion y poda; esta basada en la distancia a la casilla final y el numero de obstaculos alrededor de la casilla. */
 	private void cota(Casilla cas) {
 		int cota = 0;
 		int Xactual = cas.getX();

@@ -19,12 +19,16 @@ public class Main
 		Robot r = new Robot(c);
 
 		Vector<Casilla> sol = r.getSolucion();
+		Vector<Casilla> solRYP = r.getSolucionRYP();
 		Vector<Casilla> mejorSol = r.getMejorSolucion();
 		Vector<Casilla> solIte = r.getSolucionIterativo();
 
 		try {
 			System.out.println("Solucion: ");
 			pintaSolucion(sol);
+
+			System.out.println("Solucion RYP: ");
+			pintaSolucion(solRYP);
 			
 			System.out.println("Solucion Iterativa: ");
 			pintaSolucion(solIte);
@@ -33,6 +37,7 @@ public class Main
 			pintaSolucion(mejorSol);
 
 			guardaSolucion("UnaSolucion.txt", sol);
+			guardaSolucion("SolucionRYP.txt", solRYP);
 			guardaSolucion("SolucionIterativa.txt", solIte);
 			guardaSolucion("MejorSolucion.txt", mejorSol);
 		} catch (IOException e) {
