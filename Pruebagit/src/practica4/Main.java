@@ -20,15 +20,20 @@ public class Main
 
 		Vector<Casilla> sol = r.getSolucion();
 		Vector<Casilla> mejorSol = r.getMejorSolucion();
+		Vector<Casilla> solIte = r.getSolucionIterativo();
 
 		try {
 			System.out.println("Solucion: ");
 			pintaSolucion(sol);
+			
+			System.out.println("Solucion Iterativa: ");
+			pintaSolucion(solIte);
 
 			System.out.println("Mejor solucion: ");
 			pintaSolucion(mejorSol);
 
 			guardaSolucion("UnaSolucion.txt", sol);
+			guardaSolucion("SolucionIterativa.txt", solIte);
 			guardaSolucion("MejorSolucion.txt", mejorSol);
 		} catch (IOException e) {
 			e.printStackTrace();

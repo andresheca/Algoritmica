@@ -7,7 +7,7 @@ import java.lang.Math;
 /**
  * Robot que se utiliza en una central nuclear en caso de catastrofe
  * 
- * @author Adrian Herrera Arcila, Andres Heredia Canales y Asier Lopez Uriona
+ * @author Adrian Herrera Arcila, Andrés Heredia Canales y Asier Lopez Uriona
  * 
  */
 
@@ -58,6 +58,16 @@ public class Robot {
 		return null;
 	}
 
+	public Vector<Casilla> getSolucionIterativo() {
+		this.vectorDecisiones = new Vector<Casilla>();
+		vectorDecisiones.add(this.c_ini);
+
+		if (BTIterativo(1)) {
+			return vectorSolucion;
+		}
+		return null;
+	}
+
 	public Vector<Casilla> getMejorSolucion() {
 		this.vectorDecisiones = new Vector<Casilla>();
 		vectorDecisiones.add(this.c_ini);
@@ -70,7 +80,11 @@ public class Robot {
 		}
 		return null;
 	}
-
+	/**
+	 * Método que devuelve el mejor camino encontrado(si le hay).
+	 * @param int representa el numero de decisiones tomadas (numero de casillas avanzadas)
+	 * @return true si encuentra solucion
+	 */
 	private boolean backMejor(int k) {
 		int i = 0;
 		Casilla c = vectorDecisiones.lastElement();
@@ -118,6 +132,9 @@ public class Robot {
 
 	/**
 	 * Metodo de backtracking que busca una solucion para el camino del robot.
+	 * 
+	 * @param int k entero que representa el numero de decisiones tomadas
+	 * @return boolean true si ha encontrado la solucion
 	 */
 	private boolean vueltaAtras(int k) {
 		boolean b = false;
@@ -149,117 +166,160 @@ public class Robot {
 					b = vueltaAtras(k + 1);
 					vectorDecisiones.remove(vectorDecisiones.lastElement());
 				}
-				i++;
+
 			}
+			i++;
 		}
 		return b;
 	}
 
-	private boolean BTIterativo()
-	{
-		boolean encontrado=false;
-		int k=0;
-		while(!encontrado)
-		{
-			
+	/**
+	 * Version iterativa del metodo de backtracking
+	 * 
+	 * @param int k representa el numero de decisiones tomadas.
+	 * @return boolean true si hay solucion
+	 */
+	private boolean BTIterativo(int k) {
+		boolean encontrado = false;
+		// Preparar recorrido nivel k
+		int i = 0;
+		// Pila donde vamos a ir guardando los pasos que vamos dando
+		StackIF<Casilla> pila = new StackDynamic<Casilla>();
+		//Casilla de inicio
+		Casilla c = vectorDecisiones.lastElement();
+		//Lo metemos a la pila
+		pila.push(c);
+		Casilla cTemp;
+		boolean factible = false;
+		// Si la pila esta vacia significa que no hay solucion al problema
+		while (!pila.isEmpty() && !encontrado) {
+			c = pila.getTop();
+			//Variables de control
+			i = 0;
+			factible = false;
+			while (i < 4 && !factible) {
+
+				if (i == 0) {
+					// Izquierda
+					cTemp = this.central.getCasilla(c.getX(), c.getY() - 1);
+				} else if (i == 1) {
+					// Arriba
+					cTemp = this.central.getCasilla(c.getX() - 1, c.getY());
+				} else if (i == 2) {
+					// Derecha
+					cTemp = this.central.getCasilla(c.getX(), c.getY() + 1);
+				} else {
+					// Abajo
+					cTemp = this.central.getCasilla(c.getX() + 1, c.getY());
+				}
+				//Si es factible añadimos el movimiento, si no, volvemos a la casilla anterior.
+				if (this.esFactible(cTemp)) {
+					k++;
+					vectorDecisiones.add(cTemp);
+					pila.push(cTemp);
+					//Si hemos llegado al final, salimos, si no, salimos del bucle (ya hemos encontrado una casilla factible).
+					if (cTemp.equals(c_fin)) {
+						vectorSolucion = new Vector<Casilla>(vectorDecisiones);
+						encontrado = true;
+					} else {
+						factible = true;
+					}
+				} else {
+					pila.pop();
+				}
+				i++;
+
+			}
+
 		}
-		//TODO: Hay que hacerlo.
-		return false;
+		return encontrado;
 	}
 
-	private boolean ramYPoda(int k)
-	{
-		PriorityQueue<Casilla> adyacentes=new PriorityQueue<Casilla>();
-		Casilla c=vectorDecisiones.lastElement();
+	private boolean ramYPoda(int k) {
+		PriorityQueue<Casilla> adyacentes = new PriorityQueue<Casilla>();
+		Casilla c = vectorDecisiones.lastElement();
 		Casilla temp;
-		//Generamos los adyacentes:
-		temp=central.getCasilla(c.getX()+1, c.getY());
-		if(temp!=null)
-		{
+		// Generamos los adyacentes:
+		temp = central.getCasilla(c.getX() + 1, c.getY());
+		if (temp != null) {
 			cota(temp);
 			adyacentes.offer(temp);
 		}
-		temp=central.getCasilla(c.getX()-1, c.getY());
-		if(temp!=null)
-                {
-                        cota(temp);
-                        adyacentes.offer(temp);
-                }
-		temp=central.getCasilla(c.getX(), c.getY()+1);
-		if(temp!=null)
-                {
-                        cota(temp);
-                        adyacentes.offer(temp);
-                }
-		temp=central.getCasilla(c.getX(), c.getY()-1);
-		if(temp!=null)
-                {
-                        cota(temp);
-                        adyacentes.offer(temp);
-                }
-		while(!adyacentes.isEmpty())
-		{
-			temp=adyacentes.poll();
-			if(esFactible(temp) && k<kMejor)
-			{
-				if(temp.equals(c_fin))
-				{
-					vectorSolucion=new Vector<Casilla>(vectorDecisiones);
-					kMejor=k;
-				}else
-				{
-					ramYPoda(k+1);
+		temp = central.getCasilla(c.getX() - 1, c.getY());
+		if (temp != null) {
+			cota(temp);
+			adyacentes.offer(temp);
+		}
+		temp = central.getCasilla(c.getX(), c.getY() + 1);
+		if (temp != null) {
+			cota(temp);
+			adyacentes.offer(temp);
+		}
+		temp = central.getCasilla(c.getX(), c.getY() - 1);
+		if (temp != null) {
+			cota(temp);
+			adyacentes.offer(temp);
+		}
+		while (!adyacentes.isEmpty()) {
+			temp = adyacentes.poll();
+			if (esFactible(temp) && k < kMejor) {
+				if (temp.equals(c_fin)) {
+					vectorSolucion = new Vector<Casilla>(vectorDecisiones);
+					kMejor = k;
+				} else {
+					ramYPoda(k + 1);
 				}
 			}
 		}
-		return (vectorSolucion!=null);
+		return (vectorSolucion != null);
 	}
 
 	/* Metodo que calcula la cota sobre la que se basara ramificacion y poda */
-	private void cota(Casilla cas)
-	{
-		int cota=0;
-		int Xactual=cas.getX();
-		int Yactual=cas.getY();
-		cota+=Math.abs((c_fin.getX()-Xactual)+(c_fin.getY()-Yactual));
-		//Derecha:
-		if(central.getCasilla(Xactual+1, Yactual)!=null && central.getCasilla(Xactual+1, Yactual).getContenido()=='O')
-			cota+=1;
-		//Izquierda:
-		if(central.getCasilla(Xactual-1, Yactual)!=null && central.getCasilla(Xactual-1, Yactual).getContenido()=='O')
-                        cota+=1;
-		//Arriba:
-		if(central.getCasilla(Xactual, Yactual+1)!=null && central.getCasilla(Xactual, Yactual+1).getContenido()=='O')
-                        cota+=1;
-		//Abajo:
-                if(central.getCasilla(Xactual, Yactual-1)!=null && central.getCasilla(Xactual, Yactual-1).getContenido()=='O')
-                        cota+=1;
+	private void cota(Casilla cas) {
+		int cota = 0;
+		int Xactual = cas.getX();
+		int Yactual = cas.getY();
+		cota += Math.abs((c_fin.getX() - Xactual) + (c_fin.getY() - Yactual));
+		// Derecha:
+		if (central.getCasilla(Xactual + 1, Yactual) != null
+				&& central.getCasilla(Xactual + 1, Yactual).getContenido() == 'O')
+			cota += 1;
+		// Izquierda:
+		if (central.getCasilla(Xactual - 1, Yactual) != null
+				&& central.getCasilla(Xactual - 1, Yactual).getContenido() == 'O')
+			cota += 1;
+		// Arriba:
+		if (central.getCasilla(Xactual, Yactual + 1) != null
+				&& central.getCasilla(Xactual, Yactual + 1).getContenido() == 'O')
+			cota += 1;
+		// Abajo:
+		if (central.getCasilla(Xactual, Yactual - 1) != null
+				&& central.getCasilla(Xactual, Yactual - 1).getContenido() == 'O')
+			cota += 1;
 		cas.setCota(cota);
 	}
 
-		/**
-		 * Metodo que indica si una casilla es buena candidata para el movimiento
-		 * del robot hacia ella.
-		 */
-		private boolean esFactible(Casilla casilla) {
-			// Si no esta dentro de los limites de la central.
-			if (casilla == null) {
-				return false;
-			}
-
-			// Si la casilla en cuestion esta ocupada, no podemos pasar por ella.
-			if (this.central.hayObstaculo(casilla)) {
-				return false;
-			}
-
-			// Si ya hemos explorado dicha casilla.
-			if (this.vectorDecisiones.contains(casilla)) {
-				return false;
-			}
-
-			// La casilla es factible
-			return true;
+	/**
+	 * Metodo que indica si una casilla es buena candidata para el movimiento
+	 * del robot hacia ella.
+	 */
+	private boolean esFactible(Casilla casilla) {
+		// Si no esta dentro de los limites de la central.
+		if (casilla == null) {
+			return false;
 		}
+
+		// Si la casilla en cuestion esta ocupada, no podemos pasar por ella.
+		if (this.central.hayObstaculo(casilla)) {
+			return false;
+		}
+
+		// Si ya hemos explorado dicha casilla.
+		if (this.vectorDecisiones.contains(casilla)) {
+			return false;
+		}
+
+		// La casilla es factible
+		return true;
 	}
-
-
+}

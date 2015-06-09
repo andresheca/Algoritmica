@@ -73,4 +73,11 @@ public class Casilla implements Comparable<Casilla>
 		Casilla c = (Casilla) obj;
 		return this.x == c.getX() && this.y == c.getY();
 	}
+
+	@Override
+	public String toString() {
+		return "Casilla [x=" + x + ", y=" + y + ", contenido=" + contenido
+				+ "]";
+	}
+	
 }

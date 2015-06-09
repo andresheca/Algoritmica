@@ -15,7 +15,7 @@ public interface StackIF <T>
 	 */
 	public T getTop ();
 	/**
-	 * Inserta un elemento a la pida.
+	 * Inserta un elemento a la pila.
 	 * @param element El elemento a ser a?adido.
 	 * @return la pila incluyendo el elemento.
 	 */
